@@ -1,5 +1,5 @@
 <?php
 
 $name = $_GET['name'] ?? 'Guest';
-
-echo "Hi" . $name . "!";
+header('Bvdv:github!');
+echo "Hi " . $name . "!";
