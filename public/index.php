@@ -1,6 +1,6 @@
 <?php
 
-function getLang($default) {
+function getLang(array $get, ) {
     return
         !empty($_GET['lang']) ? $_GET['lang'] :
             (!empty($_COOKIE['lang']) ? $_COOKIE['lang'] :
