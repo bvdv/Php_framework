@@ -11,3 +11,6 @@
 .idea/httpRequests/2018-03-24T095252.200.html
 .idea/httpRequests/2018-03-24T095233.200.html
 .idea/httpRequests/2018-03-24T095304.200.html
+composer.phar
+# composer vendor dir
+/vendor
