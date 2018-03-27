@@ -14,3 +14,4 @@
 composer.phar
 # composer vendor dir
 /vendor
+phpunit.xml.dist
