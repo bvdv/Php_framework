@@ -34,12 +34,12 @@ class RequestTest extends TestCase
     public function testParsedBody(): void
     {
         $_GET = [];
-        $_POST = $data = 'title';
+        $_POST = $data = ['title' => 'Title'];
 
         $request = new Request();
 
         self::assertEquals([], $request->getQueryParams());
-        self::assertNull($data, $request->getParsedBody());
+        self::assertEquals($data, $request->getParsedBody());
     }
 
 }
