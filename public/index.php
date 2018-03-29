@@ -22,7 +22,9 @@ $lang = getLang($_GET, $_COOKIE, $_SESSION, $_SERVER,'en');
 */
 ### Initialization
 
-$request = new Request($_GET, $_POST);
+$request = new Request();
+$request->withQueryParams($_GET);
+$request->withParsedBody($_POST);
 
 ### Action
 
