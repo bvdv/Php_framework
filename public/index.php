@@ -6,7 +6,7 @@ chdir(dirname(__DIR__));
 require 'vendor/autoload.php';
 //require 'src/Framework/Http/Request.php';
 
-
+/*
 function getLang(array $get, array $cookie, array $session, array $server, $default) {
     return
         !empty($get['lang']) ? $get['lang'] :
@@ -19,7 +19,7 @@ session_start();
 
 $name = $_GET['name'] ?? 'Guest';
 $lang = getLang($_GET, $_COOKIE, $_SESSION, $_SERVER,'en');
-
+*/
 ### Initialization
 
 $request = new Request();
@@ -28,4 +28,5 @@ $request = new Request();
 
 $name = $request->getQueryParams()['name'] ?? 'Guest';
 header('Bvdv:github');
-echo "Hi " . $name . "! Your lang is " . $lang;
+echo "Hi " . $name . "!";
+//echo "Hi " . $name . "! Your lang is " . $lang;
