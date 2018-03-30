@@ -2,8 +2,6 @@
 
 namespace Framework\Http;
 
-//use Framework\Http\Request;
-
 class RequestFactory
 {
     public static function fromGlobals(array $query = null, array $body = null): Request
