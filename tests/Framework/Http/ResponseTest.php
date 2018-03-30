@@ -1,7 +1,6 @@
 <?php
 namespace Tests\Framework\Http;
 
-use Framework\Http\Request;
 use Framework\Http\Response;
 use PHPUnit\Framework\TestCase;
 
@@ -13,7 +12,7 @@ class ResponseTest extends TestCase
 
         self::assertEquals($body, $response->getBody());
         self::assertEquals(200, $response->getStatusCode());
-        self::assertNull('OK', $response->getReasonPhrase());
+        self::assertEquals('OK', $response->getReasonPhrase());
     }
 
     public function test404(): void
@@ -22,7 +21,7 @@ class ResponseTest extends TestCase
 
         self::assertEquals($body, $response->getBody());
         self::assertEquals($status, $response->getStatusCode());
-        self::assertNull('Not Found', $response->getReasonPhrase());
+        self::assertEquals('Not Found', $response->getReasonPhrase());
     }
 
     public function testHeaders(): void
