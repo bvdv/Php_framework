@@ -2,7 +2,7 @@
 
 namespace Framework\Http;
 
-class RequestFactory
+class RequestFactory implements RequestInterface
 {
     public static function fromGlobals(array $query = null, array $body = null): Request
     {
