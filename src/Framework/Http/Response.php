@@ -84,11 +84,11 @@ class Response implements ResponseInterface
         if ($new->hasHeader($name)) {
             unset($new->headers[$name]);
         }
-        $new->headers[$name] = $value;
+        $new->headers[$name] = (array)$value;
         return $new;
     }
 
-    public function withAddedheader($name, $value): self
+    public function withAddedHeader($name, $value): self
     {
         $new = clone $this;
         $new->headers[$name] = array_merge($new->headers[$name], (array)$value);
