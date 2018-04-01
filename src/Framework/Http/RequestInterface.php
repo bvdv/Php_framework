@@ -11,8 +11,4 @@ interface RequestInterface
     public function getParsedBody();
 
     public function withParsedBody($data);
-
-
-
-
 }
