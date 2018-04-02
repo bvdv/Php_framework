@@ -6,7 +6,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
 
-class Request implements RequestInterface
+class Request implements ServerRequestInterface
 {
     private $queryParams;
     private $parsedBody;
@@ -41,8 +41,8 @@ class Request implements RequestInterface
         return $new;
     }
 
-    public function getProtocolVersio() {}
-    public function withProtocolVersio() {}
+    public function getProtocolVersion() {}
+    public function withProtocolVersion($version) {}
     public function getHeaders() {}
     public function hasHeader($name) {}
     public function getHeader($name) {}
