@@ -1,7 +1,8 @@
 <?php
 
-use Framework\Http\ResponseSender;
+
 use Zend\Diactoros\Response\HtmlResponse;
+use Zend\Diactoros\Response\SapiEmitter;
 use Zend\Diactoros\ServerRequestFactory;
 
 chdir(dirname(__DIR__));
@@ -21,5 +22,5 @@ $response = (new HtmlResponse('Hello, ' . $name . '!'))
 
 ###Sending
 
-$emitter = new ResponseSender();
-$emitter->send($response);
+$emitter = new SapiEmitter();
+$emitter->emit($response);
