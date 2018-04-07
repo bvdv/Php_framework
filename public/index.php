@@ -1,6 +1,5 @@
 <?php
 
-
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\SapiEmitter;
 use Zend\Diactoros\ServerRequestFactory;
@@ -11,7 +10,6 @@ require 'vendor/autoload.php';
 ### Initialization
 
 $request = ServerRequestFactory::fromGlobals();
-
 
 ### Action
 
@@ -26,7 +24,6 @@ if ($path === '/') {
 }
 
 ### Postprocessing
-
 
 $response = $response->withHeader('Bvdv', 'GitHub');
 
