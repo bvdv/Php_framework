@@ -15,11 +15,18 @@ $request = ServerRequestFactory::fromGlobals();
 
 ### Action
 
-$name = $request->getQueryParams()['name'] ?? 'Guest';
-
-$response = new HtmlResponse('Hello,' . $name . '!');
+$path = $request->getUri()->getPath();
+if ($path === '/') {
+    $name = $request->getQueryParams()['name'] ?? 'Guest';
+    $response = new HtmlResponse('Hi, ' . $name . '!');
+} elseif ($path === '/about') {
+    $response = new HtmlResponse('About Us');
+} else {
+    $response = new HtmlResponse('Page not Found', 404);
+}
 
 ### Postprocessing
+
 
 $response = $response->withHeader('Bvdv', 'GitHub');
 
