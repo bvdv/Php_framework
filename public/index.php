@@ -1,6 +1,7 @@
 <?php
 
 use Zend\Diactoros\Response\HtmlResponse;
+use Zend\Diactoros\Response\JsonResponse;
 use Zend\Diactoros\Response\SapiEmitter;
 use Zend\Diactoros\ServerRequestFactory;
 
@@ -14,12 +15,33 @@ $request = ServerRequestFactory::fromGlobals();
 ### Action
 
 $path = $request->getUri()->getPath();
+
 if ($path === '/') {
+
     $name = $request->getQueryParams()['name'] ?? 'Guest';
     $response = new HtmlResponse('Hi, ' . $name . '!');
+
 } elseif ($path === '/about') {
+
     $response = new HtmlResponse('About Us');
+
+} elseif ($path === '/blog') {
+
+    $response = new JsonResponse([
+       ['id' => 2, 'title' => 'The Second Post'],
+       ['id' => 1, 'title' => 'The First Post'],
+    ]);
+} elseif (preg_match('#^/blog/(?P<id>\d+)$#i', $path, $matches)) {
+
+    $id = $matches['id'];
+    if ($id > 2){
+        $response = new JsonResponse(['error' => 'Undefined page'], 404);
+    } else {
+        $response = new JsonResponse(['id' => $id, 'title' => 'Post #' . $id]);
+    }
+
 } else {
+
     $response = new HtmlResponse('Page not Found', 404);
 }
 
