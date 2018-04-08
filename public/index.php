@@ -1,5 +1,6 @@
 <?php
 
+use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\JsonResponse;
 use Zend\Diactoros\Response\SapiEmitter;
@@ -15,33 +16,46 @@ $request = ServerRequestFactory::fromGlobals();
 ### Action
 
 $path = $request->getUri()->getPath();
+$action = null;
 
 if ($path === '/') {
 
-    $name = $request->getQueryParams()['name'] ?? 'Guest';
-    $response = new HtmlResponse('Hi, ' . $name . '!');
+    $action = function ( ServerRequestInterface $request) {
+        $name = $request->getQueryParams()['name'] ?? 'Guest';
+        return new HtmlResponse('Hi, ' . $name . '!');
+    };
 
 } elseif ($path === '/about') {
 
-    $response = new HtmlResponse('About Us');
+    $action = function () {
+        return new HtmlResponse('About Us');
+    };
 
 } elseif ($path === '/blog') {
 
-    $response = new JsonResponse([
-       ['id' => 2, 'title' => 'The Second Post'],
-       ['id' => 1, 'title' => 'The First Post'],
-    ]);
+    $action = function () {
+        return new JsonResponse([
+            ['id' => 2, 'title' => 'The Second Post'],
+            ['id' => 1, 'title' => 'The First Post'],
+        ]);
+    };
 } elseif (preg_match('#^/blog/(?P<id>\d+)$#i', $path, $matches)) {
 
-    $id = $matches['id'];
-    if ($id > 2){
-        $response = new JsonResponse(['error' => 'Undefined page'], 404);
-    } else {
-        $response = new JsonResponse(['id' => $id, 'title' => 'Post #' . $id]);
-    }
+    $request = $request->withAttribute('id', $matches['id']);
 
+    $action = function (ServerRequestInterface $request) {
+        $id = $request->getAttribute('id');
+        if ($id > 2) {
+            return new JsonResponse(['error' => 'Undefined page'], 404);
+        }
+        return new JsonResponse(['id' => $id, 'title' => 'Post #' . $id]);
+
+    };
+}
+
+if ($action) {
+    $response = $action($request);
 } else {
-
     $response = new HtmlResponse('Page not Found', 404);
 }
 
