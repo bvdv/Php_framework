@@ -1,7 +1,7 @@
 <?php
 
 use Framework\Http\Router\Exception\RequestNotMatchedException;
-use Framework\Http\Router\RouterCollection;
+use Framework\Http\Router\RouteCollection;
 use Framework\Http\Router\Router;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\HtmlResponse;
