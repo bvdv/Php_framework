@@ -40,21 +40,21 @@ $routes->get('blog_show', '/blog/{id}', function (ServerRequestInterface $reques
    return new JsonResponse(['id' => $id, 'title' => 'Post #' . $id]);
 }, ['id' => '\d+']);
 
-$routes = new Router($routes);
+$router = new Router($routes);
 
 ### Running
 
-$routes = ServerRequestInterface::fromGlobals();
-
+$request = ServerRequestFactory::fromGlobals();
 try {
-    $result = $routes->match($request);
+    $result = $router->match($request);
     foreach ($result->getAttributes() as $attribute => $value) {
         $request = $request->withAttribute($attribute, $value);
     }
 
-    $acion = $result->getHandler();
+    $action = $result->getHandler();
+    $response = $action($request);
 } catch (RequestNotMatchedException $e) {
-    $response = new HtmlResponse('Page not found', 404);
+    $response = new HtmlResponse('Page not found!', 404);
 }
 
 ### Postprocessing

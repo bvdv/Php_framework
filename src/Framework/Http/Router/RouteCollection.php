@@ -8,7 +8,7 @@ class RouteCollection
 
     public function addRoute(Route $route): void
     {
-        $this->routes[] = route;
+        $this->routes[] = $route;
     }
 
     public function add($name, $pattern, $handler, array $methods, array $tokens = []): void

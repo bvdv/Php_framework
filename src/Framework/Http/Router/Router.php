@@ -10,7 +10,7 @@ class Router
 {
     private $routes;
 
-    private function __construct(RouteCollection $routes)
+    public function __construct(RouteCollection $routes)
     {
         $this->routes = $routes;
     }
