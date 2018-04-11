@@ -8,9 +8,11 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class Router
 {
+    private $routes;
+
     private function __construct(RouteCollection $routes)
     {
-        $this->routes = routes;
+        $this->routes = $routes;
     }
 
     public function match(ServerRequestInterface $request): Result
