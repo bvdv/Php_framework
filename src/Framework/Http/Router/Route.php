@@ -14,7 +14,7 @@ class Route
 
     public function __construct($name, $pattern, $handler, array $methods, array $tokens = [])
     {
-        $this->name = $pattern;
+        $this->name = $name;
         $this->pattern = $pattern;
         $this->handler = $handler;
         $this->tokens = $tokens;

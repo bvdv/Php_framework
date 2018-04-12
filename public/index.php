@@ -34,8 +34,8 @@ $routes->get('blog', '/blog', function () {
 
 $routes->get('blog_show', '/blog/{id}', function (ServerRequestInterface $request) {
    $id = $request->getAttribute('id');
-   if ($id > 2) {
-       return new HtmlResponse('Page not found!', 404);
+   if ($id > 5) {
+       return new JsonResponse(['error' => 'Undefined blog page'], 404);
    }
    return new JsonResponse(['id' => $id, 'title' => 'Post #' . $id]);
 }, ['id' => '\d+']);
@@ -54,7 +54,7 @@ try {
     $action = $result->getHandler();
     $response = $action($request);
 } catch (RequestNotMatchedException $e) {
-    $response = new HtmlResponse('Page not found!', 404);
+    $response = new JsonResponse(['error' => 'Undefined page'], 404);
 }
 
 ### Postprocessing
