@@ -1,10 +1,11 @@
 <?php
 
-namespace Framework\Http\Router;
+namespace Framework\Http\Router\Route;
 
+use Framework\Http\Router\Result;
 use Psr\Http\Message\ServerRequestInterface;
 
-class Route
+class RegexpRoute implements Route
 {
     private $name;
     private $pattern;
@@ -23,30 +24,30 @@ class Route
 
     public function match(ServerRequestInterface $request): ?Result
     {
-       if ($this->methods && !\in_array($request->getMethod(), $this->methods, true)) {
-           return null;
-       }
+        if ($this->methods && !\in_array($request->getMethod(), $this->methods, true)) {
+            return null;
+        }
 
-       $pattern = preg_replace_callback('~\{([^\}]+)\}~', function ($matches) {
-           $argument = $matches[1];
-           $replace = $this->tokens[$argument] ?? '[^}]+';
-           return '(?P<' . $argument . '>' .$replace . ')';
-       }, $this->pattern);
+        $pattern = preg_replace_callback('~\{([^\}]+)\}~', function ($matches) {
+            $argument = $matches[1];
+            $replace = $this->tokens[$argument] ?? '[^}]+';
+            return '(?P<' . $argument . '>' . $replace . ')';
+        }, $this->pattern);
 
-       $path = $request->getUri()->getPath();
+        $path = $request->getUri()->getPath();
 
-       if (!preg_match('~^' . $pattern . '$~i', $path,$matches)) {
-           return null;
-       }
+        if(!preg_match('~^' . $pattern . '$~i', $path, $matches)) {
+            return null;
+        }
 
-       return new Result(
-           $this->name,
-           $this->handler,
-           array_filter($matches, '\is_string', ARRAY_FILTER_USE_KEY)
-       );
+        return new Result(
+            $this->name,
+            $this->handler,
+            array_filter($matches, '\is_string', ARRAY_FILTER_USE_KEY)
+        );
     }
 
-    public function generate($name, array $params =[]): ?string
+    public function generate($name, array $params = []): ?string
     {
         $arguments = array_filter($params);
 
@@ -61,8 +62,8 @@ class Route
             }
             return $arguments[$argument];
         }, $this->pattern);
-
         return $url;
     }
+
 
 }
