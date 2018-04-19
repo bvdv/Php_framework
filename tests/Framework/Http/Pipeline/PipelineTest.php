@@ -28,7 +28,7 @@ class PipelineTest extends TestCase
 
 class Middleware1
 {
-   public function __invoke(ServerRequestInterface $request, callabe $next)
+   public function __invoke(ServerRequestInterface $request, callable $next)
    {
        return $next($request->withAttribute('middleware-1', 1));
    }
@@ -46,6 +46,6 @@ class Last
 {
     public function __invoke(ServerRequestInterface $request)
     {
-        return new JsonResponse($request->getAttribute());
+        return new JsonResponse($request->getAttributes());
     }
 }
