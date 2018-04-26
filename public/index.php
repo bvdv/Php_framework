@@ -27,7 +27,6 @@ $routes->get('cabinet', '/cabinet', [
     new Middleware\BasicAuthMiddleware($params['users']),
     Action\CabinetAction::class,
 ]);
-
 $routes->get('blog', '/blog', Action\Blog\IndexAction::class);
 $routes->get('blog_show', '/blog/{id}', Action\Blog\ShowAction::class, ['id' => '\d+']);
 
@@ -45,18 +44,8 @@ try {
     foreach ($result->getAttributes() as $attribute => $value) {
         $request = $request->withAttribute($attribute, $value);
     }
-
     $handler = $result->getHandler();
-    if (is_array($handler)) {
-        $middleware = new Pipeline();
-        foreach ($handler as $item) {
-            $middleware->pipe($resolver->resolve($item));
-        }
-    } else {
-        $middleware = $resolver->resolve($handler);
-    }
-    $pipeline->pipe($middleware);
-
+    $pipeline->pipe($resolver->resolve($handler));
 } catch (RequestNotMatchedException $e) {}
 
 $response = $pipeline($request, new Middleware\NotFoundHandler());
