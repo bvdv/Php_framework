@@ -2,6 +2,7 @@
 
 use App\Http\Action;
 use App\Http\Middleware;
+use Framework\Http\Application;
 use Framework\Http\Pipeline\MiddlewareResolver;
 use Framework\Http\Pipeline\Pipeline;
 use Framework\Http\Router\AuraRouterAdapter;
@@ -32,9 +33,9 @@ $routes->get('blog_show', '/blog/{id}', Action\Blog\ShowAction::class, ['id' => 
 
 $router = new AuraRouterAdapter($aura);
 $resolver = new MiddlewareResolver();
-$pipeline = new Pipeline();
+$app = new Application($resolver);
 
-$pipeline->pipe($resolver->resolve(Middleware\ProfilerMiddleware::class));
+$app->pipe(Middleware\ProfilerMiddleware::class);
 
 ### Running
 
@@ -44,11 +45,10 @@ try {
     foreach ($result->getAttributes() as $attribute => $value) {
         $request = $request->withAttribute($attribute, $value);
     }
-    $handler = $result->getHandler();
-    $pipeline->pipe($resolver->resolve($handler));
+    $app->pipe($result->getHandler());
 } catch (RequestNotMatchedException $e) {}
 
-$response = $pipeline($request, new Middleware\NotFoundHandler());
+$response = $app($request, new Middleware\NotFoundHandler());
 
 ### Postprocessing
 
