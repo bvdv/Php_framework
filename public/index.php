@@ -35,6 +35,7 @@ $router = new AuraRouterAdapter($aura);
 $resolver = new MiddlewareResolver();
 $app = new Application($resolver, new Middleware\NotFoundHandler());
 
+$app->pipe(Middleware\CredentialsMiddleware::class);
 $app->pipe(Middleware\ProfilerMiddleware::class);
 
 ### Running
@@ -49,10 +50,6 @@ try {
 } catch (RequestNotMatchedException $e) {}
 
 $response = $app->run($request);
-
-### Postprocessing
-
-$response = $response->withHeader('Bvdv', 'GitHub');
 
 ###Sending
 
