@@ -16,6 +16,7 @@ require 'vendor/autoload.php';
 ### Initialization
 
 $params = [
+    'debug' => true,
     'users' => ['user' => 'pass'],
 ];
 
