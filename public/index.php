@@ -15,7 +15,7 @@ require 'vendor/autoload.php';
 
 $params = [
     'debug' => true,
-    'users' => ['user' => 'pass'],
+    'users' => ['admin' => 'pass'],
 ];
 
 $aura = new Aura\Router\RouterContainer();
@@ -37,7 +37,7 @@ $app = new Application($resolver, new Middleware\NotFoundHandler());
 $app->pipe(new Middleware\ErrorHandlerMiddleware($params['debug']));
 $app->pipe(Middleware\CredentialsMiddleware::class);
 $app->pipe(Middleware\ProfilerMiddleware::class);
-$app->pipe(new Framework\Http\Middleware\RouteMiddleware($router, $response));
+$app->pipe(new Framework\Http\Middleware\RouteMiddleware($router, $resolver));
 
 ### Running
 
