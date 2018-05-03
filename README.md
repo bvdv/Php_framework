@@ -1,6 +1,6 @@
 # Php_framework
 
-<p>Self-educational project based on online courses.</p>
+<p>Self-educational project based on learning new approaches in PHP development and online courses, online resources.</p>
 
 <strong>Goals:</strong> 
 <ul>
