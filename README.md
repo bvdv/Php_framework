@@ -8,4 +8,4 @@
 <li>Creating some layer/layers for easy swapping Composer packages.</li>
 <li>PHP tests with PHPUnit.</li>
 <li>Creating packages</li>
-<li>...</li>
+<li>Improve understanding of PHP frameworks architecture</li>
