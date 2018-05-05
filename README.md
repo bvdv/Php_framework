@@ -9,3 +9,4 @@
 <li>Testing with PHPUnit.</li>
 <li>Creating packages</li>
 <li>Improve understanding of PHP frameworks architecture</li>
+</ul>
