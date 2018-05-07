@@ -41,7 +41,7 @@ class MiddlewareResolverTest extends TestCase
         $response = $middleware(
             (new ServerRequest())->withAttribute('next', true),
             new Response(),
-            new NotFoundMiddleware();
+            new NotFoundMiddleware()
         );
 
         self::assertEquals(404, $response->getStatusCode());
