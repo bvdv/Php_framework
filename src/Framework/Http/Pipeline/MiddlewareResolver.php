@@ -22,7 +22,7 @@ class MiddlewareResolver
         }
         if ($handler instanceof MiddlewareInterface) {
            return function (ServerRequestInterface $request, ResponseInterface $response, callable $next) use ($handler) {
-              return $handler->process($request, new InteropHandlerWeapper($next));
+              return $handler->process($request, new InteropHandlerWrapper($next));
            };
         }
 
@@ -43,7 +43,7 @@ class MiddlewareResolver
         throw new UnknownMiddlewareTypeException($handler);
     }
 
-    private function createPipe(array $handlers): Pipline
+    private function createPipe(array $handlers): Pipeline
     {
         $pipeline = new Pipeline();
         foreach ($handlers as $handler) {

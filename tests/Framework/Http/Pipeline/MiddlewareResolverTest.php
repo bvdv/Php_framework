@@ -4,6 +4,7 @@ namespace Tests\Framework\Http\Pipeline;
 
 use Framework\Http\Pipeline\MiddlewareResolver;
 use Interop\Http\Server\MiddlewareInterface;
+use Interop\Http\Server\RequestHandlerInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -15,15 +16,15 @@ use Zend\Diactoros\ServerRequest;
 class MiddlewareResolverTest extends TestCase
 {
     /**
-     * @dataProvaider getValidHandlers
+     * @dataProvider getValidHandlers
      * @param $handler
      */
-
-    public function testDirect($handler)
+     public function testDirect($handler)
     {
         $resolver = new MiddlewareResolver();
         $middleware = $resolver->resolve($handler);
 
+        /** @var ResponseInterface $response */
         $response = $middleware(
             (new ServerRequest())->withAttribute('attribute', $value = 'value'),
             new Response(),
@@ -33,11 +34,16 @@ class MiddlewareResolverTest extends TestCase
         self::assertEquals([$value], $response->getHeader('X-Header'));
     }
 
+    /**
+     * @dataProvider getValidHandlers
+     * @param $handler
+     */
     public function testNext($handler)
     {
         $resolver = new MiddlewareResolver();
         $middleware = $resolver->resolve($handler);
 
+        /** @var ResponseInterface $response */
         $response = $middleware(
             (new ServerRequest())->withAttribute('next', true),
             new Response(),
@@ -68,8 +74,8 @@ class MiddlewareResolverTest extends TestCase
             }],
             'DoublePass Class' => [DoublePassMiddleware::class],
             'DoublePass Object' => [new DoublePassMiddleware()],
-            'Interop Class' => [IneropMiddleware::class],
-            'Interop objetc' => [new IteropMiddleware()],
+            'Interop Class' => [InteropMiddleware::class],
+            'Interop objetc' => [new InteropMiddleware()],
         ];
     }
 
@@ -82,6 +88,7 @@ class MiddlewareResolverTest extends TestCase
             new CallableMiddleware()
         ]);
 
+        /** @var ResponseInterface $response */
         $response = $middleware(
             (new ServerREquest())->withAttribute('attribute', $value = 'value'),
             new Response(),
