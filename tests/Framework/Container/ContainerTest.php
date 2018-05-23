@@ -29,7 +29,7 @@ class ContainerTest extends TestCase
     {
         $container = new Container();
 
-        $container->($name = 'name', function () {
+        $container->set($name = 'name', function () {
             return new \stdClass();
         });
 
